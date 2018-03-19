@@ -16,9 +16,14 @@ public class DemoTheaterSeating {
 
 
     public static void main(String[] args) throws IOException {
+        DemoTheaterSeating seating = new DemoTheaterSeating();
+        String fileName = "theater_layout.txt";
+        seating.process(fileName);
+    }
 
-    	ProcessPreSalesRequests processPreSaleRequests = new ProcessPreSalesRequestsImpl();
-        SeatingAndCustomerRequest seatingAndCustomerRequest = processPreSaleRequests.extractInfo("theater_layout.txt");
+    public void process(String fileName) {
+        ProcessPreSalesRequests processPreSaleRequests = new ProcessPreSalesRequestsImpl();
+        SeatingAndCustomerRequest seatingAndCustomerRequest = processPreSaleRequests.extractInfo(fileName);
 
         ExtractSeatingAndCustomerOrder extractSeatingAndCustomerOrder = new ExtractSeatingAndCustomerOrder();
         extractSeatingAndCustomerOrder.extractSeatingAndCustomerOrder(seatingAndCustomerRequest);
@@ -26,7 +31,6 @@ public class DemoTheaterSeating {
         new AssignCustomerSeating().processSeating(seatingAndCustomerRequest, extractSeatingAndCustomerOrder.getHighestSeatSection(), extractSeatingAndCustomerOrder.getTotalTheaterSeats());
 
         new PrintTheaterSeating().printSeatingAssignments(seatingAndCustomerRequest.getCustomerMap());
-
 
     }
 }
